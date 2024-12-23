@@ -1,0 +1,82 @@
+/* src/styles/form.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    
+    /* Flexbox to center content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+  }
+  
+  .form-container {
+    max-width: 500px;
+    padding: 25px;
+    border: 2px solid #e31e24; /* Seylan Red */
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #e31e24; /* Seylan Red */
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  input,
+  select {
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff; /* White background for input/select */
+    color: #333; /* Dark text color */
+    outline-color: #e31e24; /* Highlight Seylan Red on focus */
+  }
+  
+  input::placeholder,
+  select::placeholder {
+    color: #aaa;
+  }
+  
+  button {
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    background-color: #e31e24; /* Seylan Red */
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #b50017; /* Darker Red */
+  }
+  
+  button:active {
+    background-color: #7c000f; /* Even Darker Red */
+  }
+  
+  .form-container:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
