@@ -17,7 +17,7 @@ public class User
 	public string email { get; set; }
 
 	[Required]
-	[telNo]
+	[Phone]
 	public string telNo { get; set; }
 
 	[Required]

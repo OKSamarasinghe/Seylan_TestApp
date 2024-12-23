@@ -1,4 +1,6 @@
-﻿using System.*;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using seylan_firsst_app_backend.Models;
+using System;
 
 public class UserService
 {
@@ -14,11 +16,11 @@ public class UserService
 		User user = _user.FirstOrDefault(user => user.id == id);
 		if(user == null)
 		{
-			return new Result<User> { isSuccess =  false, ErrorMessage =  $"The following user with id {id} was not found!"}
+			return new Result<User> { isSuccess = false, ErrorMessage = $"The following user with id {id} was not found!" };
 		}
 		else
 		{
-			return new Result<User> { isSuccess = true, data =  user, InfoMessage =  "The user was found and returned successfully!"}
+			return new Result<User> { isSuccess = true, data = user, InfoMessage = "The user was found and returned successfully!" };
 		}
 	}
 
@@ -36,31 +38,36 @@ public class UserService
 		User existingUser = _user.FirstOrDefault(u => u.id == user.id);
 		if(existingUser == null)
 		{
-			return new Result<User> { isSuccess = false, ErrorMessage =  $"The following user with the id {user.id} was not found. Update unsuccessful!"}
+			return new Result<User> { isSuccess = false, ErrorMessage = $"The following user with the id {user.id} was not found. Update unsuccessful!" };
 		}
-		else
-		{
-			//add the details from the passed User object to the existing user object
-			exstingUser.name = user.name;
-			existingUser.email = user.email;
-			existingUser.telNo = user.telNo;
-			existingUser.accountType = user.accountType;
-			existingUser.preferredBranch = user.preferredBranch;
-		}
-	}
 
-	//implement the logic to delete a user
-	public Result<User> DeleteUser(int id)
+        //add the details from the passed User object to the existing user object
+        existingUser.name = user.name;
+        existingUser.email = user.email;
+        existingUser.telNo = user.telNo;
+        existingUser.accountType = user.accountType;
+        existingUser.preferredBranch = user.preferredBranch;
+
+		return new Result<User> { isSuccess = true, InfoMessage = "User successfully updated"};
+    }
+
+    private Result<User> NoContent()
+    {
+        throw new NotImplementedException();
+    }
+
+    //implement the logic to delete a user
+    public Result<User> Delete(int id)
 	{
 		User existingUser = _user.FirstOrDefault(u => u.id == id);
 		if(existingUser == null)
 		{
-			return Result<User> { isSuccess = false, ErrorMessage =  $"The following user with id {id} does not exist! Delete failed!"}
+			return new Result<User> { isSuccess = false , ErrorMessage =  $"The following user with id {id} does not exist! Delete failed!"};
 		}
-		else
-		{
-			_user.Remove(existingUser);
-        }
-	}
+
+		//if the user is available to delete
+		_user.Remove(existingUser);
+        return new Result<User> { isSuccess = true, InfoMessage = "User successfully deleted!" };
+    }
 
 }
