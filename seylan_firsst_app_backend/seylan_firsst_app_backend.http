@@ -1,0 +1,6 @@
+@seylan_firsst_app_backend_HostAddress = http://localhost:5222
+
+GET {{seylan_firsst_app_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
