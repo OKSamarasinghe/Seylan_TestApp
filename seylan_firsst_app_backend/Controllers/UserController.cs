@@ -16,65 +16,76 @@ public class UserController : ControllerBase
 
 	//GET api/user
 	[HttpGet]
-	public IActionResult GetAll()
+	public async Task<IActionResult> GetAll()
 	{
-		List<User> users = _userService.GetAll();
+		List<User> users = await _userService.GetAllAsync();
 		return Ok(users);
 	}
 
 	//GET api/user/{id}
-	[HttpGet("{id}")]
-	public IActionResult GetById(int id)
+	[HttpGet("{id}", Name ="GetUserById")]
+	public async Task<IActionResult> GetByIdAsync(int id)
 	{
-		Result<User> user = _userService.GetById(id);
-        if(user.isSuccess)
-        {
-			return Ok(user.data);
-        }
-		else
+		User user = await _userService.GetByIdAsync(id);
+		if(user == null)
 		{
-			return NotFound(user.ErrorMessage);
+			return NotFound(new { Message = $"User with user_id {id} is not found!" });
 		}
+
+		return Ok(new { Message = "User retrieved successfully!", data = user });
     }
 
 
     //POST api/user
     [HttpPost]
-    public IActionResult AddUser([FromBody] User user)
+    public async Task<IActionResult> AddUserAsync(User user)
     {
-        _userService.Add(user);
-        return CreatedAtAction(nameof(GetById), new { id = user.id }, user);
+
+		//get the result from inserting new User data
+		var result = await _userService.AddAsync(user);
+
+        if (!result.isSuccess)
+        {
+            return BadRequest(new { Message = result.ErrorMessage });
+        }
+
+        return CreatedAtRoute("GetUserById", new { id = result.data.id }, result.data);
     }
 
 
 	//PUT  api/user/{id}
 	[HttpPut("{id}")]
-	public IActionResult UpdateUser([FromBody] User user)
+	public async Task<IActionResult> UpdateUserAsync(int id, User user)
 	{
-		var existingUser = _userService.GetById(user.id);
+		//if the id passed does not match the id in the User body
+		if(id != user.id)
+		{
+			//return bad request client error 400
+			return BadRequest();
+		}
 
-        if (!existingUser.isSuccess)
-        {
-            return NotFound(existingUser.ErrorMessage);
-        }
+		//update the user details
+		var result = await _userService.UpdateUserAsync(user);
 
-        //user was found so now we can update
-        _userService.UpdateUser(user);
-		return Ok();
+		//validate result response
+		if (!result.isSuccess)
+		{
+			return NotFound(new { Message = result.ErrorMessage });
+		}
+
+		return Ok(new { Message = result.isSuccess });
     }
 
 	//DELETE api/user/{id}
 	[HttpDelete("{id}")]
-	public IActionResult Delete(int id)
+	public async Task<IActionResult> DeleteAsync(int id)
 	{
-		var existingUser = _userService.GetById(id);
-		if(!existingUser.isSuccess)
+		var result = await _userService.DeleteAsync(id);
+		if (!result.isSuccess)
 		{
-			return NotFound(existingUser.ErrorMessage);
+			return NotFound(new { Message = $"Error deleting user, error message: {result.ErrorMessage}" });
 		}
-		
-		//User exists
-		_userService.Delete(id);
-		return NoContent();
+
+		return Ok(new { Message = $"Successfully deleted user, {result.InfoMessage}" });
     }
 }

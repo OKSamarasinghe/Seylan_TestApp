@@ -10,19 +10,19 @@ public class User
 
 	//additional attributes for the user
 	[Required]
-	public string name { get; set; }
+	public string Name { get; set; }
 
 	[Required]
 	[EmailAddress]
-	public string email { get; set; }
+	public string Email { get; set; }
 
 	[Required]
 	[Phone]
-	public string telNo { get; set; }
+	public string PhoneNumber { get; set; }
 
 	[Required]
-	public string accountType { get; set; }
+	public string AccountType { get; set; }
 
     [Required]
-    public string preferredBranch { get; set;  }
+    public string PreferredBranch { get; set;  }
 }

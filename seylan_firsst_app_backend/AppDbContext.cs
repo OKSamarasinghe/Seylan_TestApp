@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace seylan_firsst_app_backend
 {
