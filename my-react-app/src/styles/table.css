@@ -1,0 +1,91 @@
+/* src/styles/table.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+  }
+  
+  .table-container {
+    padding: 120px;
+    max-width: 90%;
+    margin: 40px auto;
+    background-color: #fff;
+    border: 2px solid #e31e24;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    position: relative; /* Needed for absolute positioning of the Back button */
+  }
+  
+  h2 {
+    text-align: center;
+    color: #e31e24;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  thead {
+    background-color: #e31e24;
+    color: #fff;
+  }
+  
+  td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    color: #000;
+  }
+  
+  th {
+    font-weight: bold;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  button {
+    margin: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #e31e24;
+  }
+  
+  button:hover {
+    background-color: #b50017;
+  }
+  
+  /* Style for the Back button positioned in the top-right corner */
+  .back-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #e31e24;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-btn:hover {
+    background-color: #b50017;
+  }
+  
+  .back-btn:active {
+    background-color: #7c000f;
+  }
+  

@@ -28,6 +28,14 @@ body {
     margin-bottom: 20px;
   }
   
+  /* Add styles to set the text color of user details */
+.form-container p {
+  color: #333; /* Set the text color of user details to dark gray (or black) */
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
   form {
     display: flex;
     flex-direction: column;
@@ -80,3 +88,22 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
   
+  table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #e31e24;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #e31e24;
+  color: white;
+}

@@ -1,25 +1,45 @@
-// src/components/UserDetailForm.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./../styles/form.css";
+import  { addUser }  from "../services/Users.js";
 
 const UserDetailForm = () => {
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phoneNumber: "",
-    accountType: "",
-    branch: "",
+    Name: "",
+    Email: "",
+    PhoneNumber: "",
+    AccountType: "",
+    PreferredBranch: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("User Details Submitted:", formData);
-    alert("Form Submitted Successfully!");
+    
+    // Adding the user to the backend first
+    try {
+      const newUser = await addUser(formData);
+      if (newUser) {
+        setFormData({
+          Name: newUser.Name,
+          Email: newUser.Email,
+          PhoneNumber: newUser.PhoneNumber,
+          AccountType: newUser.AccountType,
+          PreferredBranch: newUser.PreferredBranch,
+        });
+        alert("Form Submitted Successfully!");
+        navigate("/table"); // Redirect to table page
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Error submitting form. Please try again.");
+    }
   };
 
   return (
@@ -30,8 +50,8 @@ const UserDetailForm = () => {
           Full Name:
           <input
             type="text"
-            name="fullName"
-            value={formData.fullName}
+            name="Name" // Use matching field name
+            value={formData.Name}
             onChange={handleChange}
             placeholder="Enter your full name"
             required
@@ -41,8 +61,8 @@ const UserDetailForm = () => {
           Email:
           <input
             type="email"
-            name="email"
-            value={formData.email}
+            name="Email" // Use matching field name
+            value={formData.Email}
             onChange={handleChange}
             placeholder="Enter your email address"
             required
@@ -52,8 +72,8 @@ const UserDetailForm = () => {
           Phone Number:
           <input
             type="tel"
-            name="phoneNumber"
-            value={formData.phoneNumber}
+            name="PhoneNumber" // Use matching field name
+            value={formData.PhoneNumber}
             onChange={handleChange}
             placeholder="Enter your phone number"
             required
@@ -62,8 +82,8 @@ const UserDetailForm = () => {
         <label>
           Account Type:
           <select
-            name="accountType"
-            value={formData.accountType}
+            name="AccountType" // Use matching field name
+            value={formData.AccountType}
             onChange={handleChange}
             required
           >
@@ -77,8 +97,8 @@ const UserDetailForm = () => {
           Preferred Branch:
           <input
             type="text"
-            name="branch"
-            value={formData.branch}
+            name="PreferredBranch" // Use matching field name
+            value={formData.PreferredBranch}
             onChange={handleChange}
             placeholder="Enter your preferred branch"
             required
