@@ -1,18 +1,14 @@
-// src/components/UserDetailForm.jsx
+// src/components/UpdateUser.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./../styles/form.css";
 
-const UserDetailForm = ({ data, setData }) => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phoneNumber: "",
-    accountType: "",
-    branch: "",
-  });
-
+const UpdateUser = ({ users, setUsers }) => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const user = users.find((user) => user.id === parseInt(id));
+
+  const [formData, setFormData] = useState({ ...user });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,14 +17,17 @@ const UserDetailForm = ({ data, setData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setData([...data, { ...formData, id: Date.now() }]);
-    alert("Form Submitted Successfully!");
-    navigate("/table"); // Redirect to table page
+    const updatedUsers = users.map((u) =>
+      u.id === parseInt(id) ? { ...formData } : u
+    );
+    setUsers(updatedUsers);
+    alert("User updated successfully!");
+    navigate("/table");
   };
 
   return (
     <div className="form-container">
-      <h2>Seylan Bank - User Details Form</h2>
+      <h2>Update User</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Full Name:
@@ -37,7 +36,6 @@ const UserDetailForm = ({ data, setData }) => {
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
-            placeholder="Enter your full name"
             required
           />
         </label>
@@ -48,7 +46,6 @@ const UserDetailForm = ({ data, setData }) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Enter your email address"
             required
           />
         </label>
@@ -59,7 +56,6 @@ const UserDetailForm = ({ data, setData }) => {
             name="phoneNumber"
             value={formData.phoneNumber}
             onChange={handleChange}
-            placeholder="Enter your phone number"
             required
           />
         </label>
@@ -71,7 +67,6 @@ const UserDetailForm = ({ data, setData }) => {
             onChange={handleChange}
             required
           >
-            <option value="">--Select Account Type--</option>
             <option value="Savings">Savings</option>
             <option value="Current">Current</option>
             <option value="Fixed Deposit">Fixed Deposit</option>
@@ -84,14 +79,13 @@ const UserDetailForm = ({ data, setData }) => {
             name="branch"
             value={formData.branch}
             onChange={handleChange}
-            placeholder="Enter your preferred branch"
             required
           />
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit">Save</button>
       </form>
     </div>
   );
 };
 
-export default UserDetailForm;
+export default UpdateUser;
