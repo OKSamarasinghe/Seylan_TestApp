@@ -11,4 +11,4 @@ const addUser = async (user) => {
     }
 }
 
-export  {addUser};
+export default addUser;
