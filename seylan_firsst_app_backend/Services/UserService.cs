@@ -68,6 +68,7 @@ public class UserService
 			existingUser.PhoneNumber = user.PhoneNumber;
 			existingUser.AccountType = user.AccountType;
 			existingUser.PreferredBranch = user.PreferredBranch;
+			existingUser.UserImage = user.UserImage;
 
 			//save the changes
 			await _context.SaveChangesAsync();

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("seylan_firsst_app_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98b671f64714db47414506ffbf27b529d256af7e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d490b47d514c7b4f94502152f42b9567b952ef16")]
 [assembly: System.Reflection.AssemblyProductAttribute("seylan_firsst_app_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("seylan_firsst_app_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

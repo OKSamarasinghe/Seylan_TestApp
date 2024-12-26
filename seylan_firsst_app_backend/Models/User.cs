@@ -25,4 +25,7 @@ public class User
 
     [Required]
     public string PreferredBranch { get; set;  }
+
+	[Required]
+	public string UserImage { get; set; }
 }
