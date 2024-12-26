@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/form.css";
-import  addUser  from "../services/Users";
+import  { addUser }  from "../services/Users.js";
 
 const UserDetailForm = ({ data, setData }) => {
   const [formData, setFormData] = useState({
@@ -26,7 +26,13 @@ const UserDetailForm = ({ data, setData }) => {
     try {
       const newUser = await addUser(formData);
       if (newUser) {
-        setData([...data, { ...formData, id: Date.now() }]); // Adding to local state
+        setFormData({
+          Name: newUser.Name,
+          Email: newUser.Email,
+          PhoneNumber: newUser.PhoneNumber,
+          AccountType: newUser.AccountType,
+          PreferredBranch: newUser.PreferredBranch,
+        });
         alert("Form Submitted Successfully!");
         navigate("/table"); // Redirect to table page
       }
@@ -39,6 +45,7 @@ const UserDetailForm = ({ data, setData }) => {
   return (
     <div className="form-container">
       <h2>Seylan Bank - User Details Form</h2>
+
       <form onSubmit={handleSubmit}>
         <label>
           Full Name:
@@ -99,6 +106,7 @@ const UserDetailForm = ({ data, setData }) => {
           />
         </label>
         <button type="submit">Submit</button>
+        <button onClick={() => { navigate("/table") }}>View the table</button>
       </form>
     </div>
   );

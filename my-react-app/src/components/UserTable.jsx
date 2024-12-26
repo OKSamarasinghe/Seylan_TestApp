@@ -1,19 +1,19 @@
 // src/components/UserTable.jsx
-import React,{useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/table.css";
-// import { getUsers } from "../services/Users";
+import { getAllUsers } from "../services/Users";
 
-const UserTable = ({ data, setData }) => {
-    // useEffect(() => {
-    //     try {
-    //         getUsers().then((response) => {
-    //             setData(response.data);
-    //         });
-    //     }catch(e){
-    //         console.log(e);
-    //     }
-    // }, []);
+const UserTable = () => {
+
+    const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getAllUsers().then((response) => {
+      console.log(response.data);
+      setData(response.data);
+    });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -53,16 +53,16 @@ const UserTable = ({ data, setData }) => {
         </thead>
         <tbody>
           {data.map((user) => (
-            <tr key={user.Id}>
-              <td>{user.Name}</td>
-              <td>{user.Email}</td>
-              <td>{user.PhoneNumber}</td>
-              <td>{user.AccountType}</td>
-              <td>{user.PreferredBranch}</td>
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.phoneNumber}</td>
+              <td>{user.accountType}</td>
+              <td>{user.preferredBranch}</td>
               <td>
-                <button onClick={() => handleView(user.Id)}>View</button>
-                <button onClick={() => handleUpdate(user.Id)}>Update</button>
-                <button onClick={() => handleDelete(user.Id)}>Delete</button>
+                <button onClick={() => handleView(user.id)}>View</button>
+                <button onClick={() => handleUpdate(user.id)}>Update</button>
+                <button onClick={() => handleDelete(user.id)}>Delete</button>
               </td>
             </tr>
           ))}

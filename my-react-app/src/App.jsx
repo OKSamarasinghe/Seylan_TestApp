@@ -11,10 +11,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<UserDetailForm data={data} setData={setData} />} />
-        <Route path="/table" element={<UserTable data={data} setData={setData} />} />
-        <Route path="/update/:id" element={<UpdateUser users={data} setUsers={setData} />} />
-        <Route path="/view/:id" element={<ViewUser users={data} />} />
+        <Route path="/" element={<UserDetailForm/>} />
+        <Route path="/table" element={<UserTable/>} />
+        <Route path="/update/:id" element={<UpdateUser/>} />
+        <Route path="/view/:id" element={<ViewUser/>} />
       </Routes>
     </Router>
   );
