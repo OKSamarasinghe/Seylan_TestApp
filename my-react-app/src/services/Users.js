@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Base_URL = 'https://localhost:7103/api/User';
+const Base_URL = 'https://localhost:7113/api/userDetails';
 
 //add a new user to the database
 const addUser = async (user) => {
@@ -26,7 +26,8 @@ const getAllUsers = async () => {
 const getUserById = async (id) => {
     try{
         const response = await axios.get(`${Base_URL}/${id}`);
-        return response.data;
+        console.log("Fetched user data:", response.data); // Add logging
+        return response;
     }catch(error){
         console.error(error);
     }
@@ -37,11 +38,8 @@ const updateUser = async (user) =>{
     try{
         console.log(user);
         const response = await axios.put(`${Base_URL}/${user.id}`, user);
-        if(response.status === 200){
-            return response;
-        }else{
-            console.log('Error updating user');
-        }
+        console.log(typeof(response.status));
+        return response;
     }catch(error){
         console.error(error);
     }

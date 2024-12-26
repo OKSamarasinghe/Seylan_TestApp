@@ -33,12 +33,10 @@ const UpdateUser = () => {
     e.preventDefault(); // Prevent form default submission
     try {
       const response = await updateUser(formData);
-      if(response.status === 200){
-        alert("User updated successfully!");
-        navigate("/table");
-      }else{
-        console.log("Error updating user");
-      }
+      console.log(response);
+      alert("User updated successfully!");
+      navigate("/table");
+
     } catch (error) {
       console.error("Error updating user:", error);
       alert("Failed to update user. Please try again.");

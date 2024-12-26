@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/table.css";
-import { getAllUsers } from "../services/Users";
+import { deleteUser, getAllUsers} from "../services/Users";
 
 const UserTable = () => {
 
@@ -18,8 +18,15 @@ const UserTable = () => {
   const navigate = useNavigate();
 
   const handleDelete = (id) => {
-    const updatedData = data.filter((item) => item.id !== id);
-    setData(updatedData);
+    try{
+      deleteUser(id).then((response) => {
+        console.log(response);
+        alert("User deleted successfully!");
+        setData((prevData) => prevData.filter((user) => user.id !== id));
+      });
+    }catch(error){
+      console.log(error);
+      }
   };
 
   const handleView = (id) => {
