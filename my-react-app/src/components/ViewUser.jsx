@@ -47,6 +47,7 @@ const ViewUser = () => {
       <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
       <p><strong>Account Type:</strong> {user.accountType}</p>
       <p><strong>Preferred Branch:</strong> {user.preferredBranch}</p>
+      <p><strong>User Image:</strong> <img src={user.userImage} style={{maxHeight:"150px" , maxWidth:"150px"}} /></p>
       <button onClick={() => navigate("/table")}>Back to Table</button>
     </div>
   );

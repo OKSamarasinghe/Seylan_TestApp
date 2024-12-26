@@ -55,6 +55,7 @@ const UserTable = () => {
             <th>Phone Number</th>
             <th>Account Type</th>
             <th>Preferred Branch</th>
+            <th>User Image</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -66,6 +67,7 @@ const UserTable = () => {
               <td>{user.phoneNumber}</td>
               <td>{user.accountType}</td>
               <td>{user.preferredBranch}</td>
+              <td><img src={user.userImage} style={{maxHeight:"150px" , maxWidth: "150px"}}/></td>
               <td>
                 <button onClick={() => handleView(user.id)}>View</button>
                 <button onClick={() => handleUpdate(user.id)}>Update</button>

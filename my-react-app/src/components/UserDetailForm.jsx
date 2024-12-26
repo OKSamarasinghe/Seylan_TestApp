@@ -10,13 +10,27 @@ const UserDetailForm = ({ data, setData }) => {
     PhoneNumber: "",
     AccountType: "",
     PreferredBranch: "",
+    UserImage: "",
   });
 
+  const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if(file){
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setFormData({ ...formData, UserImage: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -32,6 +46,7 @@ const UserDetailForm = ({ data, setData }) => {
           PhoneNumber: newUser.PhoneNumber,
           AccountType: newUser.AccountType,
           PreferredBranch: newUser.PreferredBranch,
+          UserImage: newUser.UserImage,
         });
         alert("Form Submitted Successfully!");
         navigate("/table"); // Redirect to table page
@@ -105,6 +120,24 @@ const UserDetailForm = ({ data, setData }) => {
             required
           />
         </label>
+
+        <label>
+          User Image:
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            required
+          />
+        </label>
+
+        {imagePreview && (
+          <div className="justify-center">
+            <label>Image Preview:</label>
+            <img src={imagePreview} alt="Image preview" style={{maxHeight: "200px" , maxWidth: "200px"}} />
+            </div>
+          )}
+
         <button type="submit">Submit</button>
         <button onClick={() => { navigate("/table") }}>View the table</button>
       </form>

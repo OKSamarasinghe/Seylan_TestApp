@@ -1,4 +1,3 @@
-// src/components/UpdateUser.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./../styles/form.css";
@@ -14,14 +13,28 @@ const UpdateUser = () => {
     email: "",
     phoneNumber: "",
     accountType: "",
-    preferredBranch: ""
+    preferredBranch: "",
+    userImage: "",
   });
 
+  const [imagePreview, setImagePreview] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    getUserById(id).then((response) => {
-      console.log(response.data);
-      setFormData(response.data);
-    });
+    const fetchUserDetails = async () => {
+      try {
+        const response = await getUserById(id);
+        setFormData(response.data);
+        setImagePreview(response.data.userImage);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch user details. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchUserDetails();
   }, [id]);
 
   const handleChange = (e) => {
@@ -29,19 +42,37 @@ const UpdateUser = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setFormData({ ...formData, userImage: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent form default submission
+    e.preventDefault();
     try {
       const response = await updateUser(formData);
-      console.log(response);
       alert("User updated successfully!");
       navigate("/table");
-
     } catch (error) {
       console.error("Error updating user:", error);
       alert("Failed to update user. Please try again.");
     }
   };
+
+  if (loading) {
+    return <p>Loading user details...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div className="form-container">
@@ -85,6 +116,7 @@ const UpdateUser = () => {
             onChange={handleChange}
             required
           >
+            <option value="">--Select Account Type--</option>
             <option value="Savings">Savings</option>
             <option value="Current">Current</option>
             <option value="Fixed Deposit">Fixed Deposit</option>
@@ -100,7 +132,26 @@ const UpdateUser = () => {
             required
           />
         </label>
-        <button type="submit">Save</button>
+        <label>
+          User Image:
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
+        </label>
+        {imagePreview && (
+          <div className="justify-center">
+            <label>Image Preview:</label>
+            <img
+              src={imagePreview}
+              alt="Image preview"
+              style={{ maxHeight: "150px", maxWidth: "150px" }}
+            />
+          </div>
+        )}
+        <button type="submit">Update User</button>
+        <button onClick={() => navigate("/table")}>Cancel</button>
       </form>
     </div>
   );
