@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./../styles/form.css";
 import  { addUser }  from "../services/Users.js";
 
-const UserDetailForm = () => {
+const UserDetailForm = ({ data, setData }) => {
   const [formData, setFormData] = useState({
     Name: "",
     Email: "",

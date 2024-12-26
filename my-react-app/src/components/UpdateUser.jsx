@@ -23,7 +23,6 @@ const UpdateUser = () => {
       setFormData(response.data);
     });
   }, [id]);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +44,6 @@ const UpdateUser = () => {
       alert("Failed to update user. Please try again.");
     }
   };
-  
 
   return (
     <div className="form-container">
