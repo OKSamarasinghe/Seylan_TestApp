@@ -22,12 +22,23 @@ const getAllUsers = async () => {
     }
 }
 
+//get user by Id
+const getUserById = async (id) => {
+    try{
+        const response = await axios.get(`${Base_URL}/${id}`);
+        return response.data;
+    }catch(error){
+        console.error(error);
+    }
+}
+
 //update a user in the database
 const updateUser = async (user) =>{
     try{
-        const response = await axios.put(`$Base_URL/${user.id}`, user);
+        console.log(user);
+        const response = await axios.put(`${Base_URL}/${user.id}`, user);
         if(response.status === 200){
-            return response.data;
+            return response;
         }else{
             console.log('Error updating user');
         }
@@ -51,4 +62,4 @@ const deleteUser = async (id) =>{
 }
 
 
-export { addUser, getAllUsers, updateUser, deleteUser };
+export { addUser, getAllUsers, getUserById, updateUser, deleteUser };

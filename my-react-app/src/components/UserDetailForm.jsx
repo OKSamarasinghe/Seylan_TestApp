@@ -45,6 +45,7 @@ const UserDetailForm = () => {
   return (
     <div className="form-container">
       <h2>Seylan Bank - User Details Form</h2>
+
       <form onSubmit={handleSubmit}>
         <label>
           Full Name:
@@ -105,6 +106,7 @@ const UserDetailForm = () => {
           />
         </label>
         <button type="submit">Submit</button>
+        <button onClick={() => { navigate("/table") }}>View the table</button>
       </form>
     </div>
   );

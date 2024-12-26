@@ -13,8 +13,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<UserDetailForm/>} />
         <Route path="/table" element={<UserTable/>} />
-        <Route path="/update/:id" element={<UpdateUser users={data} setUsers={setData} />} />
-        <Route path="/view/:id" element={<ViewUser users={data} />} />
+        <Route path="/update/:id" element={<UpdateUser/>} />
+        <Route path="/view/:id" element={<ViewUser/>} />
       </Routes>
     </Router>
   );

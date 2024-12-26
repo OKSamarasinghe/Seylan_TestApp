@@ -1,29 +1,51 @@
 // src/components/UpdateUser.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./../styles/form.css";
+import { getUserById, updateUser } from "../services/Users";
 
-const UpdateUser = ({ users, setUsers }) => {
+const UpdateUser = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const user = users.find((user) => user.id === parseInt(id));
 
-  const [formData, setFormData] = useState({ ...user });
+  const [formData, setFormData] = useState({
+    id: id,
+    name: "",
+    email: "",
+    phoneNumber: "",
+    accountType: "",
+    preferredBranch: ""
+  });
+
+  useEffect(() => {
+    getUserById(id).then((response) => {
+      console.log(response.data);
+      setFormData(response.data);
+    });
+  }, [id]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updatedUsers = users.map((u) =>
-      u.id === parseInt(id) ? { ...formData } : u
-    );
-    setUsers(updatedUsers);
-    alert("User updated successfully!");
-    navigate("/table");
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent form default submission
+    try {
+      const response = await updateUser(formData);
+      if(response.status === 200){
+        alert("User updated successfully!");
+        navigate("/table");
+      }else{
+        console.log("Error updating user");
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      alert("Failed to update user. Please try again.");
+    }
   };
+  
 
   return (
     <div className="form-container">
@@ -33,8 +55,8 @@ const UpdateUser = ({ users, setUsers }) => {
           Full Name:
           <input
             type="text"
-            name="fullName"
-            value={formData.fullName}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             required
           />
@@ -76,8 +98,8 @@ const UpdateUser = ({ users, setUsers }) => {
           Preferred Branch:
           <input
             type="text"
-            name="branch"
-            value={formData.branch}
+            name="preferredBranch"
+            value={formData.preferredBranch}
             onChange={handleChange}
             required
           />
