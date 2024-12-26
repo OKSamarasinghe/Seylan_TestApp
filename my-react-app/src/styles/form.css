@@ -13,7 +13,6 @@ body {
   }
   
   .form-container {
-    max-width: 500px;
     padding: 25px;
     border: 2px solid #e31e24; /* Seylan Red */
     border-radius: 10px;

@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 import "./../styles/form.css";
 import  { addUser }  from "../services/Users.js";
 
-const UserDetailForm = ({ data, setData }) => {
+const UserDetailForm = () => {
   const [formData, setFormData] = useState({
-    Name: "",
-    Email: "",
-    PhoneNumber: "",
-    AccountType: "",
-    PreferredBranch: "",
+    name: "",
+    email: "",
+    phoneNumber: "",
+    accountType: "",
+    preferredBranch: "",
+    userImage: "",
   });
-
+  const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -19,6 +20,18 @@ const UserDetailForm = ({ data, setData }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if(file){
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setFormData({ ...formData, userImage: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -27,11 +40,12 @@ const UserDetailForm = ({ data, setData }) => {
       const newUser = await addUser(formData);
       if (newUser) {
         setFormData({
-          Name: newUser.Name,
-          Email: newUser.Email,
-          PhoneNumber: newUser.PhoneNumber,
-          AccountType: newUser.AccountType,
-          PreferredBranch: newUser.PreferredBranch,
+          name: newUser.name,
+          email: newUser.email,
+          phoneNumber: newUser.phoneNumber,
+          accountType: newUser.accountType,
+          preferredBranch: newUser.preferredBranch,
+          userImage: newUser.userImage,
         });
         alert("Form Submitted Successfully!");
         navigate("/table"); // Redirect to table page
@@ -51,8 +65,8 @@ const UserDetailForm = ({ data, setData }) => {
           Full Name:
           <input
             type="text"
-            name="Name" // Use matching field name
-            value={formData.Name}
+            name="name" // Use matching field name
+            value={formData.name}
             onChange={handleChange}
             placeholder="Enter your full name"
             required
@@ -62,8 +76,8 @@ const UserDetailForm = ({ data, setData }) => {
           Email:
           <input
             type="email"
-            name="Email" // Use matching field name
-            value={formData.Email}
+            name="email" // Use matching field name
+            value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email address"
             required
@@ -73,8 +87,8 @@ const UserDetailForm = ({ data, setData }) => {
           Phone Number:
           <input
             type="tel"
-            name="PhoneNumber" // Use matching field name
-            value={formData.PhoneNumber}
+            name="phoneNumber" // Use matching field name
+            value={formData.phoneNumber}
             onChange={handleChange}
             placeholder="Enter your phone number"
             required
@@ -83,8 +97,8 @@ const UserDetailForm = ({ data, setData }) => {
         <label>
           Account Type:
           <select
-            name="AccountType" // Use matching field name
-            value={formData.AccountType}
+            name="accountType" // Use matching field name
+            value={formData.accountType}
             onChange={handleChange}
             required
           >
@@ -98,13 +112,34 @@ const UserDetailForm = ({ data, setData }) => {
           Preferred Branch:
           <input
             type="text"
-            name="PreferredBranch" // Use matching field name
-            value={formData.PreferredBranch}
+            name="preferredBranch" // Use matching field name
+            value={formData.preferredBranch}
             onChange={handleChange}
             placeholder="Enter your preferred branch"
             required
           />
         </label>
+
+        {/*Upload a user Image*/}
+        <label>
+          User Image:
+          <input
+            type="file"
+            name="userImage"
+            accept="image/*"
+            onChange={handleImageUpload}
+            required
+          />
+        </label> 
+
+        {/*Display the image preview */}
+        {imagePreview && (
+          <div className="justify-center">
+            <label>Image Preview</label>
+            <img src={imagePreview} alt="Image preview" style={{maxHeight: "200px", maxWidth: "200px"}}/>
+          </div>
+        )}
+
         <button type="submit">Submit</button>
         <button onClick={() => { navigate("/table") }}>View the table</button>
       </form>

@@ -2,11 +2,12 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/table.css";
-import { getAllUsers } from "../services/Users";
+import { getAllUsers, deleteUser } from "../services/Users";
 
 const UserTable = () => {
 
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllUsers().then((response) => {
@@ -15,11 +16,17 @@ const UserTable = () => {
     });
   }, []);
 
-  const navigate = useNavigate();
-
+  
   const handleDelete = (id) => {
-    const updatedData = data.filter((item) => item.id !== id);
-    setData(updatedData);
+    try{
+      deleteUser(id).then((response) => {
+        console.log(response);
+        alert("User deleted successfully!");
+        setData((prevData) => prevData.filter((user) => user.id !== id));
+      });
+    }catch(error){
+      console.log(error);
+    }
   };
 
   const handleView = (id) => {
@@ -48,6 +55,7 @@ const UserTable = () => {
             <th>Phone Number</th>
             <th>Account Type</th>
             <th>Preferred Branch</th>
+            <th>User Image</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -59,6 +67,7 @@ const UserTable = () => {
               <td>{user.phoneNumber}</td>
               <td>{user.accountType}</td>
               <td>{user.preferredBranch}</td>
+              <td><img src={user.userImage} style={{maxHeight: "150px", maxWidth: "150px"}}/></td>
               <td>
                 <button onClick={() => handleView(user.id)}>View</button>
                 <button onClick={() => handleUpdate(user.id)}>Update</button>

@@ -5,6 +5,7 @@ import UserTable from "./components/UserTable";
 import UpdateUser from "./components/UpdateUser";
 import ViewUser from "./components/ViewUser";
 
+
 const App = () => {
   const [data, setData] = useState([]);
 
